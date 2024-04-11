@@ -14,6 +14,19 @@ struct ThreadArgs {
     int end_port;
 };
 
+int parse_arguments(int argc, char *argv[], char *target_ip, int *start_port, int *end_port) {
+    if (argc != 4) {
+        fprintf(stderr, "Usage: %s <target_ip> <start_port> <end_port>\n", argv[0]);
+        return -1;
+    }
+
+    strncpy(target_ip, argv[1], 16);
+    *start_port = atoi(argv[2]);
+    *end_port = atoi(argv[3]);
+
+    return 0;
+}
+
 // Function to scan ports in a range
 void *scan_ports_range(void *args) {
     struct ThreadArgs *thread_args = (struct ThreadArgs *)args;
